@@ -1,0 +1,21 @@
+{
+	"custom": true,
+	"name": "btc_exchange_rate",
+	"translation": {
+		"en": "Bitcoin exchange rate via Coindesk API v1"
+	},
+	"urldoc": "",
+	"vendor": "Coindesk",
+
+    "attributes": [
+		{
+			"enable": true,
+			"name": "exchange_rate",
+			"subtype": "input",
+			"translation": {
+				"en": "Bitcoin exchange rate"
+			},
+			"type": "btc-exchange-rate"
+		}
+	]
+}

@@ -1,0 +1,121 @@
+openapi: 3.0.2
+info:
+    title: Bitcoin-app API
+    version: 1.0.0
+    description: Minimal API for bitcoin-app configuration
+    termsOfService: 'http://swagger.io/terms/'
+    contact: {}
+    license:
+        name: Apache 2.0
+        url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+    -
+        url: 'http://bitcoin/v1/'
+        description: ''
+paths:
+    /config:
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Configuration'
+                    description: Succesfull call
+            summary: Get current configuration
+    /config/endpoint:
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ConfigurationFieldUpdate'
+                required: true
+            responses:
+                '200':
+                    description: Success
+                '400':
+                    description: Error parsing request body
+            summary: Set new endpoint
+    /config/poll_rate:
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ConfigurationFieldUpdate'
+                required: true
+            responses:
+                '200':
+                    description: Success
+                '400':
+                    description: Error parsing request body
+    /config/timeout:
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ConfigurationFieldUpdate'
+                required: true
+            responses:
+                '200':
+                    description: Success
+                '400':
+                    description: Error parsning request body
+    /addCurrencyToProject:
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CurrencyUpdate'
+                required: true
+            responses:
+                '200':
+                    description: Success
+components:
+    schemas:
+        Configuration:
+            title: Root Type for Configuration
+            description: Configuration of app
+            type: object
+            properties:
+                endpoint:
+                    description: Coindesk API v1 endpoint
+                    type: string
+                request_timeout:
+                    description: Timeout for request to Coindesk API
+                    type: string
+                poll_rate:
+                    description: Interval between requests to endpoint
+                    type: string
+            example:
+                endpoint: 'http://abc.com'
+                request_timeout: '5'
+                poll_rate: '10'
+        ConfigurationFieldUpdate:
+            title: Root Type for ConfigurationFieldUpdate
+            description: ''
+            type: object
+            properties:
+                newValue:
+                    type: string
+            example:
+                newValue: '10'
+        CurrencyUpdate:
+            title: Root Type for CurrencyUpdate
+            description: Data for adding currency asset to project
+            required:
+                - currency
+                - project_id
+            type: object
+            properties:
+                currency:
+                    enum:
+                        - USR
+                        - EUR
+                        - GBP
+                    type: string
+                project_id:
+                    type: string
